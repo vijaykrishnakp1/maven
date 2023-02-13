@@ -24,7 +24,7 @@ pipeline
         {
             steps 
             {
-               sh 'cp /var/lib/jenkins/workspace/Sample-Pipeline/webapp/target/webapp.war /var/lib/tomacat9/webapps/'
+               sh 'cp -pvr /var/lib/jenkins/workspace/Sample-Pipeline/webapp/target/webapp.war /var/lib/tomacat9/webapps'
             }
         }
     }
