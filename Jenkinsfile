@@ -19,13 +19,7 @@ pipeline
                sh 'mvn package'
             }
         }
-        stage('Deploy') 
-        {
-            steps 
-            {
-               echo 'Deployed '
-            }
-        }
+      
          stage('Deploy') 
         {
             steps 
