@@ -23,7 +23,7 @@ pipeline
         {
             steps 
             {
-               echo 'Deployed'
+               echo 'Deployed '
             }
         }
     }
