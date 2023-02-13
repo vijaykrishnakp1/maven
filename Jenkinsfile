@@ -8,7 +8,7 @@ pipeline
         {
             steps 
             {
-                git credentialsId: '5f8ff449-f742-424e-a39a-0ef758dac005', url: 'https://github.com/vijaykrishnakp1/vijay-50.git'
+                git credentialsId: '5f8ff449-f742-424e-a39a-0ef758dac005', url: 'https://github.com/vijaykrishnakp1/maven.git'
             }
         }
 
