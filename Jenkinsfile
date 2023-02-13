@@ -1,28 +1,39 @@
-node('master')
+pipeline 
 {
-    stage('ContinuousDownload') 
+    agent any
+
+    stages 
     {
-         git 'https://github.com/selenium-saikrishna/maven.git'
+        stage('Build') 
+        {
+            steps 
+            {
+                git credentialsId: '5f8ff449-f742-424e-a39a-0ef758dac005', url: 'https://github.com/vijaykrishnakp1/vijay-50.git'
+            }
+        }
+
+        stage('Test') 
+        {
+            steps 
+            {
+               sh 'mvn package'
+            }
+        }
     }
-    stage('ContinuousBuild') 
+    post
     {
-         sh label: '', script: 'mvn package'
+
+    	always
+    	{
+    		  emailext body: '''Hi,
+please find the summary
+$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+Check console output at $BUILD_URL to view the results.
+Thanks
+Devops Team''', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'vijaykrishnakp7@gmail.com'
+    	}
+
     }
-    stage('ContinuousDeployment')
-    {
-        sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/ScriptedPipeline/webapp/target/webapp.war ubuntu@172.31.12.49:/var/lib/tomcat8/webapps/testenv.war'
-    }
-    stage('ContinuousTesting')
-    {
-        git 'https://github.com/selenium-saikrishna/FunctionalTesting.git'
-        sh label: '', script: 'java -jar /home/ubuntu/.jenkins/workspace/ScriptedPipeline/testing.jar'
-    }
-     stage('ContinuousDelivery')
-    {
-        input message: 'Waiting for Approval from the DM', submitter: 'Srinivas'
-        sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/ScriptedPipeline/webapp/target/webapp.war ubuntu@172.31.13.206:/var/lib/tomcat8/webapps/prodenv.war'
-    }
-    
-    
 }
+         
 
