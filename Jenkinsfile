@@ -4,7 +4,7 @@ pipeline
 
     stages 
     {
-        stage('Build') 
+        stage('SCM') 
         {
             steps 
             {
@@ -12,11 +12,18 @@ pipeline
             }
         }
 
-        stage('Test') 
+        stage('Build') 
         {
             steps 
             {
                sh 'mvn package'
+            }
+        }
+        stage('Deploy') 
+        {
+            steps 
+            {
+               sh 'cp /var/lib/jenkins/workspace/Sample-Pipeline/webapp/target/webapp.war /var/lib/tomacat9/webapps/'
             }
         }
     }
